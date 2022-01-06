@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Code</title>
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #consent-popup {
+            position: fixed;
+            z-index: 1;
+            top: 0px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            padding: 45px 0;
+            margin: 0 auto;
+            background-color: #ccc;
+            transition: opacity .8s;
+        }
+
+        a {
+            outline: 2px dotted #fff;
+            padding: 10px;
+            margin: 0 5px;
+            color: #000;
+            font-weight: bold;
+        }
+
+        a:hover {
+            background-color: #bbb;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        p {
+            margin: 0 auto;
+            max-width: 100%;
+            font-size: 1rem;
+            text-align: center;
+        }
+    </style>
+    <script>
+        // Click to agree banner
+        const storageType = localStorage;
+        const consentPropertyName = 'agreed';
+
+        const shouldShowPopup = () => !storageType.getItem(consentPropertyName);
+        const saveToStorage = () => !storageType.setItem(consentPropertyName, true);
+
+        window.onload = () => {
+            const consentPopup = document.getElementById('consent-popup');
+            const acceptBtn = document.getElementById('accept');
+
+            const acceptFn = event => {
+                saveToStorage(storageType);
+                consentPopup.classList.add('hidden');
+            }
+
+            acceptBtn.addEventListener('click', acceptFn);
+
+            if (shouldShowPopup()) {
+                setTimeout(() => {
+                    consentPopup.classList.remove('hidden');
+                }, 2000);
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <div id="consent-popup" class="hidden">
+        <p>Click <a id="accept" href="">OK</a> if you agree</p>
+    </div>
+    <h1 style="font-size: 4rem; text-align: center; margin-top: 30px;">HELLOWORLD!</h1>
+</body>
+
+</html>
